@@ -1,0 +1,63 @@
+1. npm init -y
+2. npm i express@5.1.0 @neondatabase/serverless@1.0.0 cors@2.8.5 dotenv@16.5.0 drizzle-orm@0.44.2 cron@4.3.0
+3. npm i nodemon@3.1.10 -D
+4. create server.js
+5. visit package.json add or edit "type":"commonjs" to "type":"module" to use import statement
+------------------------------------------------------------------------------------------------------------
+6. on package.json
+
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
+  change to 
+
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+------------------------------------------------------------------------------------------------------------  
+  7. create a folder backend/src and move the server.js there
+  change to
+    "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
+  },
+
+and 
+"main": "src/server.js"
+------------------------------------------------------------------------------------------------------------
+8. create another folder backend/src/config
+and add a file env.js
+
+import "dotenv/config";
+
+export const ENV = {
+  PORT: process.env.PORT || 5001,
+  DATABASE_URL: process.env.DATABASE_URL,
+  NODE_ENV: process.env.NODE_ENV,
+};
+------------------------------------------------------------------------------------------------------------
+9. add drizzle kit
+
+npm i drizzle-kit@0.31.1 -D
+------------------------------------------------------------------------------------------------------------
+
+10. create backend/drizzle.config.js
+
+import { ENV } from "./src/config/env.js";
+
+export default {
+  schema: "./src/db/schema.js",
+  out: "./src/db/migrations",
+  dialect: "postgresql",
+  dbCredentials: { url: ENV.DATABASE_URL },
+};
+------------------------------------------------------------------------------------------------------------
+11. execute  - npx drizzle-kit generate
+ this will create a migration basin on the drizzle config and will create migrations on backend/db
+------------------------------------------------------------------------------------------------------------
+12. execute - npx drizzle-kit migrate 
+this will push the tables to neon cloud
+
+
