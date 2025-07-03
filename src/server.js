@@ -7,7 +7,7 @@ import { and, eq } from "drizzle-orm";
 const app = express();
 const PORT = ENV.PORT || 5001;
 
-
+/*health check*/
 app.use(express.json());
 
 app.get("/api/health", (req, res) => {
